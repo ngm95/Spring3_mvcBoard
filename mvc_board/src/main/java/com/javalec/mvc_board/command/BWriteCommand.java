@@ -14,7 +14,6 @@ public class BWriteCommand implements BCommand {
 	public void execute(Model model) {
 		Map<String, Object> map = model.asMap();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
-		
 		String bName = request.getParameter("bName");
 		String bTitle = request.getParameter("bTitle");
 		String bContent = request.getParameter("bContent");
@@ -22,5 +21,4 @@ public class BWriteCommand implements BCommand {
 		BDao dao = new BDao();
 		dao.write(bName, bTitle, bContent);
 	}
-
 }

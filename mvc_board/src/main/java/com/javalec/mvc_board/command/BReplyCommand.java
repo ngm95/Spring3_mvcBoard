@@ -13,7 +13,7 @@ public class BReplyCommand implements BCommand {
 	@Override
 	public void execute(Model model) {
 		Map<String, Object> map = model.asMap();
-		HttpServletRequest request = (HttpServletRequest)map.get("request");
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		
 		String bId = request.getParameter("bId");
 		String bName = request.getParameter("bName");
@@ -25,6 +25,7 @@ public class BReplyCommand implements BCommand {
 		
 		BDao dao = new BDao();
 		dao.reply(bId, bName, bTitle, bContent, bGroup, bStep, bIndent);
+		
 	}
 
 }

@@ -20,20 +20,18 @@ import com.javalec.mvc_board.command.BWriteCommand;
 import com.javalec.mvc_board.util.Constant;
 
 @Controller
-public class BConroller {
-	public BCommand command;
-	public JdbcTemplate template;
+public class BController {
+
+	BCommand command = null;
 	
-	@Autowired
-	public void setTemplate(JdbcTemplate template) {
-		this.template = template;
-		Constant.template = this.template;
+	@RequestMapping("/")
+	public String goList(Model model) {
+		return "redirect:list";
 	}
 	
 	@RequestMapping("/list")
 	public String list(Model model) {
 		System.out.println("list()");
-		
 		command = new BListCommand();
 		command.execute(model);
 		
@@ -59,7 +57,7 @@ public class BConroller {
 	}
 	
 	@RequestMapping("/content_view")
-	public String content_view(HttpServletRequest request, Model model) {
+	public String content_view(HttpServletRequest request, Model model){
 		System.out.println("content_view()");
 		
 		model.addAttribute("request", request);
@@ -69,8 +67,8 @@ public class BConroller {
 		return "content_view";
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, value="/modify")
-	public String modify(HttpServletRequest request, Model model) {
+	@RequestMapping(value="/modify", method=RequestMethod.POST )
+	public String modify(HttpServletRequest request, Model model){
 		System.out.println("modify()");
 		
 		model.addAttribute("request", request);
@@ -81,21 +79,21 @@ public class BConroller {
 	}
 	
 	@RequestMapping("/reply_view")
-	public String reply_view(HttpServletRequest request, Model model) {
+	public String reply_view(HttpServletRequest request, Model model){
 		System.out.println("reply_view()");
 		
-		model.addAttribute("requset", request);
+		model.addAttribute("request", request);
 		command = new BReplyViewCommand();
 		command.execute(model);
 		
 		return "reply_view";
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, value="/reply")
+	@RequestMapping("/reply")
 	public String reply(HttpServletRequest request, Model model) {
 		System.out.println("reply()");
 		
-		model.addAttribute("requset", request);
+		model.addAttribute("request", request);		
 		command = new BReplyCommand();
 		command.execute(model);
 		
@@ -106,10 +104,11 @@ public class BConroller {
 	public String delete(HttpServletRequest request, Model model) {
 		System.out.println("delete()");
 		
-		model.addAttribute("requset", request);
+		model.addAttribute("request", request);
 		command = new BDeleteCommand();
 		command.execute(model);
 		
 		return "redirect:list";
 	}
+	
 }
